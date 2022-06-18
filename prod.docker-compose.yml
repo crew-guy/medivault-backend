@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   worker-zero:
-    image: ankit1841/coursemap-backend:latest
+    image: ankit1841/medivault-backend:latest
     container_name: worker-zero
     ports:
       - "8080:8080"

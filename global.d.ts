@@ -7,3 +7,5 @@ declare global {
 }
 
 export { global };
+
+declare module '@aws-sdk/client-textract';

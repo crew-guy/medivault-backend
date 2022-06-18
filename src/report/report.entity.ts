@@ -60,4 +60,7 @@ export class Report {
 
   @Column()
   files: FileInterface[];
+
+  @Column('varchar')
+  extractedText?: string;
 }

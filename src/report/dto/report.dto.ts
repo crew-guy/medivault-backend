@@ -8,4 +8,5 @@ export class CreateReportDto {
   tags: (ReportType | string)[];
   partsAffected?: BodyParts[];
   title: string;
+  extractedText: string;
 }

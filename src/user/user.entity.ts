@@ -15,5 +15,4 @@ export class User {
   phoneNumber?: string;
   @Column()
   isPrivacyOpen?: boolean;
-  // TODO :Add one-to-many mapping between course & user
 }

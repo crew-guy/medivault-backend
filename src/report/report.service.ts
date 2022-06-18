@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import { Report } from './report.entity';
+import { FileInterface, Report } from './report.entity';
 import { CreateReportDto } from './dto/report.dto';
 import { v4 as uuidv4 } from 'uuid';
+import algoliasearch from 'algoliasearch';
 
+const client = algoliasearch('E1LBNTNXRC', 'd5a9cb25a544e5f526845e193f93e775');
+const index = client.initIndex('report_text');
+
+import { OCRConverter } from './aws-textract';
+
+const REPORTS_BUCKET_NAME = 'mediavault-reports-db';
 @Injectable()
 export class ReportService {
   constructor(
@@ -33,7 +40,34 @@ export class ReportService {
   }
 
   async createReport(data: CreateReportDto): Promise<any> {
-    const report = { uuid: uuidv4(), ...data };
+    console.log('now concatenating text...');
+    const concatenatedFiles = await Promise.all(
+      data.files.map(async (file: FileInterface) => {
+        const parts = file.dataUrl.split('/');
+        const lastIdx = parts.length - 1;
+        const filename = parts[lastIdx];
+        const bucketKey = `${data.authorId}/${filename}`;
+        const ocrObject = new OCRConverter(REPORTS_BUCKET_NAME, bucketKey);
+        return await ocrObject.analyze_document_text();
+      }),
+    );
+    const concatenatedFilesText = concatenatedFiles.join('');
+    const report: Report = {
+      uuid: uuidv4(),
+      extractedText: concatenatedFilesText,
+      ...data,
+    };
+    await index.saveObject(report, {
+      autoGenerateObjectIDIfNotExist: true,
+    });
+    await index.setSettings({
+      // Select the attributes you want to search in
+      searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
+      // Define business metrics for ranking and sorting
+      // customRanking: ['desc(popularity)'],
+      // Set up some attributes to filter results on
+      // attributesForFaceting: ['categories', 'searchable(brand)', 'price'],
+    });
     return await this.reportsRepository.save(report);
   }
 }

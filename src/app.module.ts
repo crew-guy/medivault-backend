@@ -1,6 +1,4 @@
-import { CourseModule } from './course/course.module';
 import { Module } from '@nestjs/common';
-import { NotionModule } from './notion/notion.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ReportModule } from './report/report.module';
+import { AppointmentModule } from './appointment/appointment.module';
 
 @Module({
   imports: [
@@ -25,9 +24,8 @@ import { ReportModule } from './report/report.module';
       synchronize: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
-    // NotionModule,
-    // UserModule,
     ReportModule,
+    AppointmentModule,
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       // isGlobal: true,
