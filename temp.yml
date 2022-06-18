@@ -1,0 +1,164 @@
+version: '3.8'
+services:
+  worker-zero:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-zero
+    ports:
+      - '8080:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8080
+  worker-one:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-one
+    ports:
+      - '8081:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8081
+  worker-two:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-two
+    ports:
+      - '8082:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8082
+  worker-three:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-three
+    ports:
+      - '8083:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8083
+  worker-four:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-four
+    ports:
+      - '8084:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8084
+  worker-five:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-five
+    ports:
+      - '8085:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8085
+  worker-six:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-six
+    ports:
+      - '8086:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8086
+  worker-seven:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-seven
+    ports:
+      - '8087:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8087
+  worker-eight:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-eight
+    ports:
+      - '8088:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8088
+  worker-nine:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-nine
+    ports:
+      - '8089:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8089
+  worker-ten:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-ten
+    ports:
+      - '8090:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8090
+  worker-eleven:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-eleven
+    ports:
+      - '8091:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8091
+  worker-twelve:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-twelve
+    ports:
+      - '8092:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8092
+  worker-thirteen:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-thirteen
+    ports:
+      - '8093:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8093
+  worker-fourteen:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-fourteen
+    ports:
+      - '8094:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8094
+  worker-fifteen:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-fifteen
+    ports:
+      - '8095:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8095
+  worker-sixteen:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-sixteen
+    ports:
+      - '8096:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8096
+  worker-seventeen:
+    image: ankit1841/coursemap-backend:latest
+    container_name: worker-seventeen
+    ports:
+      - '8097:8080'
+    env-file:
+      - ./backend.env
+    environment:
+      - PORT_LISTENING=8097
