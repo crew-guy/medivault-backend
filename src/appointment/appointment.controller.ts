@@ -1,5 +1,5 @@
 import { AppointmentService } from './appointment.service';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { Appointment } from './appointment.entity';
 import {
   CreateAppointmentDto,
@@ -29,7 +29,7 @@ export class AppointmentController {
     return await this.appointmentService.findByDoctor(params.authorId);
   }
 
-  @Post('/:appointmentId/:doctorId')
+  @Patch('/:appointmentId/:doctorId')
   async resolveByDoctor(
     @Param() params,
     @Body() { doctorText }: ResolveAppointmentDto,

@@ -7,6 +7,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ReportModule } from './report/report.module';
 import { AppointmentModule } from './appointment/appointment.module';
+import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AppointmentModule } from './appointment/appointment.module';
       envFilePath: ['.env'],
       // isGlobal: true,
     }),
+    PatientModule,
   ],
   providers: [
     {
