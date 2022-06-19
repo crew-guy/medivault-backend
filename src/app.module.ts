@@ -17,7 +17,7 @@ import { PatientModule } from './patient/patient.module';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       port: 27017,
-      url: 'mongodb+srv://medivaulter:medivaulter@cluster0.rzbuf.mongodb.net/medivaultdb',
+      url: 'MONGO_CONNECTION_STRING',
       useNewUrlParser: true,
       keepConnectionAlive: true,
       // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
