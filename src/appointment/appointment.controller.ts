@@ -14,6 +14,12 @@ export class AppointmentController {
     console.log('I returned appointments from', process.env.PORT_LISTENING);
     return await this.appointmentService.findAll();
   }
+  @Get('/:appointmentId')
+  async findOne(
+    @Param('appointmendId') appointmendId: string,
+  ): Promise<Appointment> {
+    return await this.appointmentService.findOneById(appointmendId);
+  }
   @Get('test')
   async testRes(): Promise<{ message: string }> {
     return { message: `Responding from ${process.env.PORT_LISTENING}` };
@@ -33,7 +39,7 @@ export class AppointmentController {
   async resolveByDoctor(
     @Param() params,
     @Body() { doctorText }: ResolveAppointmentDto,
-  ): Promise<Appointment[]> {
+  ): Promise<Appointment> {
     return await this.appointmentService.resolveAppointmentByDoctor(
       params.doctorId,
       doctorText,

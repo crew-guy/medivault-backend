@@ -16,14 +16,13 @@ export class AppointmentService {
     return await this.appointmentRepository.find();
   }
 
-  async find(id: string): Promise<Appointment> {
+  async findOneById(id: string): Promise<Appointment> {
     return await this.appointmentRepository.findOneById(id);
   }
 
   async resolveAppointmentByDoctor(
     id: string,
     doctorText: string,
-    // TODO : add type safety
   ): Promise<any> {
     return await this.appointmentRepository.findOneAndUpdate(
       { uuid: id },
