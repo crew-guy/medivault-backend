@@ -40,33 +40,37 @@ export class ReportService {
   }
 
   async createReport(data: CreateReportDto): Promise<any> {
-    const concatenatedFiles = await Promise.all(
-      data.files.map(async (file: FileInterface) => {
-        const parts = file.dataUrl.split('/');
-        const lastIdx = parts.length - 1;
-        const filename = parts[lastIdx];
-        const bucketKey = `${data.authorId}/${filename}`;
-        const ocrObject = new OCRConverter(REPORTS_BUCKET_NAME, bucketKey);
-        return await ocrObject.analyze_document_text();
-      }),
-    );
-    const concatenatedFilesText = concatenatedFiles.join('');
-    const report: Report = {
-      uuid: uuidv4(),
-      extractedText: concatenatedFilesText,
-      ...data,
-    };
-    await index.saveObject(report, {
-      autoGenerateObjectIDIfNotExist: true,
-    });
-    await index.setSettings({
-      // Select the attributes you want to search in
-      searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
-      // Define business metrics for ranking and sorting
-      // customRanking: ['desc(popularity)'],
-      // Set up some attributes to filter results on
-      // attributesForFaceting: ['categories', 'searchable(brand)', 'price'],
-    });
+    let report: Report = { ...data, uuid: uuidv4() };
+    try {
+      const concatenatedFiles = await Promise?.all(
+        data.files.map(async (file: FileInterface) => {
+          const parts = file.dataUrl.split('/');
+          const lastIdx = parts.length - 1;
+          const filename = parts[lastIdx];
+          const bucketKey = `${data.authorId}/${filename}`;
+          const ocrObject = new OCRConverter(REPORTS_BUCKET_NAME, bucketKey);
+          return await ocrObject?.analyze_document_text();
+        }),
+      );
+      const concatenatedFilesText = concatenatedFiles.join('');
+      report = {
+        uuid: uuidv4(),
+        extractedText: concatenatedFilesText,
+        ...data,
+      };
+      await index.saveObject(report, {
+        autoGenerateObjectIDIfNotExist: true,
+      });
+      await index.setSettings({
+        // Select the attributes you want to search in
+        searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
+        // Define business metrics for ranking and sorting
+        // customRanking: ['desc(popularity)'],
+        // Set up some attributes to filter results on
+        // attributesForFaceting: ['categories', 'searchable(brand)', 'price'],
+      });
+    } catch (error) {}
+
     return await this.reportsRepository.save(report);
   }
 }
