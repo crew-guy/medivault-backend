@@ -23,19 +23,20 @@ export class DoctorService {
   }
 
   async findDoctorById(id: string): Promise<Doctor> {
-    return await this.doctorRepository.findOneBy({ id });
+    return await this.doctorRepository.findOneById(id);
   }
 
   async getDoctorPatients(id: string): Promise<Patient[]> {
     const docAppointments = await this.appointmentRepository.find({
       where: { doctorId: id },
     });
+    console.log(docAppointments);
     const docPatientIds = docAppointments.map(
       (appointment: Appointment) => appointment.patientId,
     );
     const docPatients = await Promise.all(
       docPatientIds.map(async (patientId: string) => {
-        return await this.patientRepository.findOneBy({ uuid: patientId });
+        return await this.patientRepository.findOneById(patientId);
       }),
     );
     return docPatients;

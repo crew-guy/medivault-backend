@@ -40,7 +40,7 @@ export class AppointmentController {
     );
   }
 
-  @Post('/:patientId')
+  @Post('/')
   async createAppointment(
     @Body() appointment: CreateAppointmentDto,
   ): Promise<void> {

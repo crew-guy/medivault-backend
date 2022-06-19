@@ -23,6 +23,7 @@ export class DoctorController {
   async getDoctorPatients(
     @Param('doctorId') doctorId: string,
   ): Promise<Patient[]> {
+    console.log('calling this api');
     return await this.doctorService.getDoctorPatients(doctorId);
   }
 

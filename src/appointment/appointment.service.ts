@@ -17,7 +17,7 @@ export class AppointmentService {
   }
 
   async find(id: string): Promise<Appointment> {
-    return await this.appointmentRepository.findOneBy({ id });
+    return await this.appointmentRepository.findOneById(id);
   }
 
   async resolveAppointmentByDoctor(

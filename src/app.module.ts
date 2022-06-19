@@ -1,8 +1,7 @@
+import { DoctorModule } from './doctor/doctor.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { getConnectionOptions } from 'typeorm';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ReportModule } from './report/report.module';
@@ -26,6 +25,8 @@ import { PatientModule } from './patient/patient.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
     ReportModule,
+    DoctorModule,
+    PatientModule,
     AppointmentModule,
     ConfigModule.forRoot({
       envFilePath: ['.env'],

@@ -14,6 +14,7 @@ export class PatientController {
 
   @Get('/:patientId')
   async findByPatient(@Param('patientId') patientId: string): Promise<Patient> {
+    console.log(patientId);
     return await this.patientService.findPatientById(patientId);
   }
 

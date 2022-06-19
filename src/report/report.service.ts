@@ -24,7 +24,7 @@ export class ReportService {
   }
 
   async findOne(id: string): Promise<Report> {
-    return await this.reportsRepository.findOneBy({ id });
+    return await this.reportsRepository.findOneBy(id);
   }
 
   // async remove(id: string): Promise<void> {
@@ -40,7 +40,6 @@ export class ReportService {
   }
 
   async createReport(data: CreateReportDto): Promise<any> {
-    console.log('now concatenating text...');
     const concatenatedFiles = await Promise.all(
       data.files.map(async (file: FileInterface) => {
         const parts = file.dataUrl.split('/');
