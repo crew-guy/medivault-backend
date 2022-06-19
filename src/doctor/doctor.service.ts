@@ -13,7 +13,7 @@ export class DoctorService {
     @InjectRepository(Doctor)
     private readonly doctorRepository: MongoRepository<Doctor>,
     @InjectRepository(Patient)
-    private readonly patientRepository: MongoRepository<Doctor>,
+    private readonly patientRepository: MongoRepository<Patient>,
     @InjectRepository(Appointment)
     private readonly appointmentRepository: MongoRepository<Appointment>,
   ) {}
@@ -26,12 +26,25 @@ export class DoctorService {
     return await this.doctorRepository.findOneBy({ id });
   }
 
-  async getDoctorPatients(id: string) {
-    return [];
+  async getDoctorPatients(id: string): Promise<Patient[]> {
+    const docAppointments = await this.appointmentRepository.find({
+      where: { doctorId: id },
+    });
+    const docPatientIds = docAppointments.map(
+      (appointment: Appointment) => appointment.patientId,
+    );
+    const docPatients = await Promise.all(
+      docPatientIds.map(async (patientId: string) => {
+        return await this.patientRepository.findOneBy({ uuid: patientId });
+      }),
+    );
+    return docPatients;
   }
 
-  async getDoctorAppointments(id: string) {
-    return [];
+  async getDoctorAppointments(id: string): Promise<Appointment[]> {
+    return await this.appointmentRepository.find({
+      where: { doctorId: id },
+    });
   }
 
   async createDoctor(data: CreateDoctorDto): Promise<any> {

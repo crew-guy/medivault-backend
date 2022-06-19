@@ -1,3 +1,4 @@
+import { Appointment } from 'src/appointment/appointment.entity';
 import { Patient } from './../patient/patient.entity';
 import { DoctorService } from './doctor.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
@@ -28,7 +29,7 @@ export class DoctorController {
   @Get('/:doctorId/appointments')
   async getDoctorAppointments(
     @Param('doctorId') doctorId: string,
-  ): Promise<Doctor[]> {
+  ): Promise<Appointment[]> {
     return await this.doctorService.getDoctorAppointments(doctorId);
   }
 
