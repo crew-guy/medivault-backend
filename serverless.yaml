@@ -1,6 +1,10 @@
-service: coursemap-backend
+service: medivault-backend
 
 useDotenv: true
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
 
 plugins:
   - serverless-offline
@@ -8,6 +12,10 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
+  # Default stage (default: dev)
+  stage: prod
+  # Default region (default: us-east-1)
+  region: ap-south-1
   environment:
     PORT: ${env:PORT}
     MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
