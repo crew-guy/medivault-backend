@@ -4,7 +4,6 @@ import { TextractClient } from '@aws-sdk/client-textract';
 
 // Set the AWS Region.
 const REGION = 'us-east-1'; //e.g. "us-east-1"
-// Create SNS service object.
 
 export class OCRConverter {
   params: any;
