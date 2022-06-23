@@ -1,5 +1,5 @@
 import { ReportService } from './report.service';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { Report } from './report.entity';
 import { CreateReportDto } from './dto/report.dto';
 
@@ -19,6 +19,11 @@ export class ReportController {
   @Get('/:authorId')
   async findByAuthor(@Param() params): Promise<Report[]> {
     return await this.reportService.findByAuthor(params.authorId);
+  }
+
+  @Delete('/')
+  async deleteReports(@Body() data: { data: string[] }): Promise<Report[]> {
+    return await this.reportService.deleteReport(data.data);
   }
 
   @Post()

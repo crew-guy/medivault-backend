@@ -5,14 +5,14 @@ import { FileInterface, Report } from './report.entity';
 import { CreateReportDto } from './dto/report.dto';
 import { v4 as uuidv4 } from 'uuid';
 import algoliasearch from 'algoliasearch';
+import { OCRConverter } from './aws-textract';
+import { ObjectId } from 'mongodb';
 
 const client = algoliasearch(
   process.env.ALGOLIA_API_ACCESS_KEY,
   process.env.ALGOLIA_API_ACCESS_SECRET,
 );
 const index = client.initIndex('report_text');
-
-import { OCRConverter } from './aws-textract';
 
 const REPORTS_BUCKET_NAME = 'mediavault-reports-db';
 @Injectable()
@@ -30,16 +30,21 @@ export class ReportService {
     return await this.reportsRepository.findOneBy(id);
   }
 
-  // async remove(id: string): Promise<void> {
-  //   await this.reportsRepository.delete(id);
-  // }
-
   async findByAuthor(authorId: string): Promise<Report[]> {
     return await this.reportsRepository.find({
       where: {
         authorId: authorId,
       },
     });
+  }
+
+  async deleteReport(reportIds: string[]): Promise<any> {
+    reportIds.forEach(async (reportId: string) => {
+      await this.reportsRepository.deleteOne({
+        _id: new ObjectId(reportId),
+      });
+    });
+    return 'reports deleted successfully!';
   }
 
   async createReport(data: CreateReportDto): Promise<any> {

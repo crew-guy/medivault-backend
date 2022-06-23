@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  ObjectID,
-  ObjectIdColumn,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 
 export enum MimeType {
   PDF = 'application/pdf',
