@@ -6,7 +6,10 @@ import { CreateReportDto } from './dto/report.dto';
 import { v4 as uuidv4 } from 'uuid';
 import algoliasearch from 'algoliasearch';
 
-const client = algoliasearch('API_ACCESS_KEY', 'API_ACCESS_SECRET');
+const client = algoliasearch(
+  process.env.ALGOLIA_API_ACCESS_KEY,
+  process.env.ALGOLIA_API_ACCESS_SECRET,
+);
 const index = client.initIndex('report_text');
 
 import { OCRConverter } from './aws-textract';
