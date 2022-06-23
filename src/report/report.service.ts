@@ -43,6 +43,7 @@ export class ReportService {
       await this.reportsRepository.deleteOne({
         _id: new ObjectId(reportId),
       });
+      await index.deleteObject(reportId);
     });
     return 'reports deleted successfully!';
   }
@@ -66,9 +67,12 @@ export class ReportService {
         extractedText: concatenatedFilesText,
         ...data,
       };
-      await index.saveObject(report, {
-        autoGenerateObjectIDIfNotExist: true,
-      });
+      await index.saveObject(
+        { ...report, objectID: report.uuid },
+        {
+          autoGenerateObjectIDIfNotExist: true,
+        },
+      );
       await index.setSettings({
         // Select the attributes you want to search in
         searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
