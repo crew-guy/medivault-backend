@@ -8,10 +8,7 @@ import algoliasearch from 'algoliasearch';
 import { OCRConverter } from './aws-textract';
 import { ObjectId } from 'mongodb';
 
-const client = algoliasearch(
-  process.env.ALGOLIA_API_ACCESS_KEY,
-  process.env.ALGOLIA_API_ACCESS_SECRET,
-);
+const client = algoliasearch('E1LBNTNXRC', 'd5a9cb25a544e5f526845e193f93e775');
 const index = client.initIndex('report_text');
 
 const REPORTS_BUCKET_NAME = 'mediavault-reports-db';
@@ -43,13 +40,15 @@ export class ReportService {
       await this.reportsRepository.deleteOne({
         _id: new ObjectId(reportId),
       });
+      console.log(reportId);
       await index.deleteObject(reportId);
     });
     return 'reports deleted successfully!';
   }
 
   async createReport(data: CreateReportDto): Promise<any> {
-    let report: Report = { ...data, uuid: uuidv4() };
+    const uniqueID = uuidv4();
+    let report: Report = { ...data, uuid: uniqueID };
     try {
       const concatenatedFiles = await Promise?.all(
         data.files.map(async (file: FileInterface) => {
@@ -63,16 +62,12 @@ export class ReportService {
       );
       const concatenatedFilesText = concatenatedFiles.join('');
       report = {
-        uuid: uuidv4(),
+        uuid: uniqueID,
         extractedText: concatenatedFilesText,
         ...data,
       };
-      await index.saveObject(
-        { ...report, objectID: report.uuid },
-        {
-          autoGenerateObjectIDIfNotExist: true,
-        },
-      );
+      const reportResponse = await this.reportsRepository.save(report);
+      await index.saveObject({ ...report, objectID: reportResponse.uuid });
       await index.setSettings({
         // Select the attributes you want to search in
         searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
@@ -81,8 +76,9 @@ export class ReportService {
         // Set up some attributes to filter results on
         // attributesForFaceting: ['categories', 'searchable(brand)', 'price'],
       });
-    } catch (error) {}
-
-    return await this.reportsRepository.save(report);
+      return reportResponse;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

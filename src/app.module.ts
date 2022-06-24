@@ -1,13 +1,12 @@
 import { DoctorModule } from './doctor/doctor.module';
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ReportModule } from './report/report.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { PatientModule } from './patient/patient.module';
-import { getConnectionOptions } from 'typeorm';
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { getConnectionOptions } from 'typeorm';
       type: 'mongodb',
       port: 27017,
       // TODO : insert mongo connection string
-      url: process.env.MONGO_CONNECTION_STRING,
+      url: 'mongodb+srv://medivaulter:medivaulter@cluster0.rzbuf.mongodb.net/medivaultdb',
       useNewUrlParser: true,
       keepConnectionAlive: true,
       // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
