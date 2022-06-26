@@ -71,14 +71,11 @@ export class ReportService {
       await index.setSettings({
         // Select the attributes you want to search in
         searchableAttributes: ['title', 'extractedText', 'date', 'tags'],
-        // Define business metrics for ranking and sorting
-        // customRanking: ['desc(popularity)'],
-        // Set up some attributes to filter results on
-        // attributesForFaceting: ['categories', 'searchable(brand)', 'price'],
       });
       return reportResponse;
     } catch (error) {
-      console.log(error);
+      await this.reportsRepository.save(report);
+      return report;
     }
   }
 }

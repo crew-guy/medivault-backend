@@ -33,7 +33,7 @@ export class OCRConverter {
       const analyzeDoc = new AnalyzeDocumentCommand(this.params);
       const response = await textractClient.send(analyzeDoc);
       let result = '';
-      response.Blocks!.forEach((block) => {
+      response?.Blocks!.forEach((block) => {
         if ('Text' in block && block.Text !== undefined) {
           console.log(block.Text);
           result = result.concat(` ${block.Text}`);
@@ -41,7 +41,8 @@ export class OCRConverter {
       });
       return result;
     } catch (e: any) {
-      throw new Error(e);
+      // console.log(e);
+      return 'unable to parse doc';
     }
   }
 }

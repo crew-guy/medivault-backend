@@ -18,7 +18,7 @@ import { PatientModule } from './patient/patient.module';
       type: 'mongodb',
       port: 27017,
       // TODO : insert mongo connection string
-      url: 'mongodb+srv://medivaulter:medivaulter@cluster0.rzbuf.mongodb.net/medivaultdb',
+      url: process.env.MONGO_CONNECTION_STRING,
       useNewUrlParser: true,
       keepConnectionAlive: true,
       // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
