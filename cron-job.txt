@@ -1,5 +1,5 @@
 */29 10 * * * https://hc-ping.com/4cd2fdd1-9556-4cde-a62f-3636f2d74578/start
-*/30 10 * * * sudo docker rm -f medivault-backend
-*/31 10 * * * yes | sudo docker image prune -a
-*/32 10 * * * sudo docker run -d -p 49160:8080 --name medivault-backend --restart unless-stopped logilabiitm/logilab-api:latest
+*/30 10 * * * sudo docker compose down
+*/31 10 * * * y | sudo docker image prune -a
+*/32 10 * * * sudo docker compose up -d
 */33 10 * * * sudo curl https://hc-ping.com/4cd2fdd1-9556-4cde-a62f-3636f2d74578
