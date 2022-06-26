@@ -21,7 +21,6 @@ import { PatientModule } from './patient/patient.module';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       port: 27017,
-      // TODO : insert mongo connection string
       url: process.env.MONGO_CONNECTION_STRING,
       useNewUrlParser: true,
       keepConnectionAlive: true,
