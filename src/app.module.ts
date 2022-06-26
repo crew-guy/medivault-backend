@@ -10,6 +10,10 @@ import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+      isGlobal: true,
+    }),
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 20,
@@ -29,10 +33,6 @@ import { PatientModule } from './patient/patient.module';
     DoctorModule,
     PatientModule,
     AppointmentModule,
-    ConfigModule.forRoot({
-      envFilePath: ['.env'],
-      isGlobal: true,
-    }),
     PatientModule,
   ],
   providers: [
